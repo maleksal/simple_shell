@@ -54,11 +54,6 @@ char *checkCMDpath(char *cmd, char *path)
 
 	struct stat sh;
 
-	/* check if given command contains path and is valid */
-	if (stat(cmd, &sh) == 0)
-		return (NULL);
-
-
 	/* remove VAR= */
 	token = strtok(path, "=");
 

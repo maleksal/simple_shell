@@ -58,7 +58,7 @@ int executer_process(char **array)
 	char *ptr_mem = NULL;
 	char *ptr_path = NULL;
 	pid_t pd, wpid;
-
+	struct stat sh;
 	int status;
 
 	pd = fork();
@@ -70,27 +70,33 @@ int executer_process(char **array)
 
 	else if (pd ==  0)
 	{
-		/*get $PATH check for command */
-		ptr_path = _getenv("PATH", environ);
-		ptr_mem = checkCMDpath(array[0], ptr_path);
+		
+		if (stat(array[0], &sh) == 0)
+			execve(array[0], array, environ);
+		
+		else
+		{
 
-		if (ptr_mem != NULL)
-			array[0] = ptr_mem;
+			/*get $PATH and check for command */
+			
+			ptr_path = _getenv("PATH", environ);
+			ptr_mem = checkCMDpath(array[0], ptr_path);
 
-		execve(array[0], array, environ);
+			if (ptr_mem == NULL)
+				execve(array[0], array, environ);
+			else
+				execve(ptr_mem, array, environ);
+		}
+
 		perror(array[0]);
-		free(ptr_path);
-		return (0);
 	}
 
 	while ((wpid = wait(&status)) > 0)
 	;
+	
+	free(ptr_path);
+	free(NULL);
 
-	if (ptr_mem != NULL)
-	{
-	array[0] = NULL;
-		free(ptr_mem);
-	}
 	return (1);
 }
 
@@ -113,7 +119,7 @@ char *prompt(void)
 	if (ret <= 0)
 	{
 		free(buffer);
-
+		buffer = NULL;
 		if (isatty(STDIN_FILENO))
 			write(STDIN_FILENO, "\n", 1);
 
