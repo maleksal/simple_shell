@@ -10,23 +10,6 @@
 #include <sys/stat.h>
 #include <sys/wait.h>
 
-
-
-/**
- * struct builtin - struct for builtin functions
- * @cmd: pointer to arr
- * @ptr_v: pointer to function that takes no param
- * @ptr: pointer to function that takes param
- */
-
-typedef struct builtin
-{
-	char *cmd;
-	void (*ptr_v) (int);
-	void (*ptr) (char *);
-} b_cmd;
-
-
 int _strlen(char *);
 char *_strncpy(char *, char *, int);
 char *_strcat(char *, char *);
