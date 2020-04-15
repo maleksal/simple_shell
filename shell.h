@@ -1,7 +1,7 @@
 #ifndef SHELL_H
 #define SHELL_H
 
-
+/* HEADER FILES */
 #include <signal.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -11,6 +11,7 @@
 #include <sys/stat.h>
 #include <sys/wait.h>
 
+/* FUNCTION PROTOTYPES */
 void interrupt(int state);
 int _strlen(char *);
 char *_strncpy(char *, char *, int);
