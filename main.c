@@ -66,7 +66,7 @@ int executer_process(char **array, int *exec, char *name, char **env)
 	pd = fork();
 	if (pd < 0)
 	{
-		perror("shell");
+		perror("Error");
 		return (0);
 	} else if (pd ==  0)
 	{
