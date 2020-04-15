@@ -48,12 +48,13 @@ char **parser(char *buffer)
 /**
  * executer_process - creates a new child process then executes
  * the give command using execve.
+ * @program_name: name of the executable ./hsh
  * @exec_status: number of execution, needed for errors
  * @array: takes an 2d array
  * Return: 0 on success OR 1 on fail
  */
 
-int executer_process(char **array, int *exec_status)
+int executer_process(char **array, int *exec_status, char *program_name)
 {
 	char *ptr_mem = NULL;
 	char *ptr_path = NULL;
@@ -82,7 +83,7 @@ int executer_process(char **array, int *exec_status)
 
 			if (ptr_mem == NULL)
 			{
-				build_error(array[0], exec_status);
+				build_error(array[0], exec_status, program_name);
 				exit(1);
 			} else
 				execve(ptr_mem, array, environ);
@@ -138,10 +139,12 @@ char *prompt(int *exec_status)
 
 /**
  * main - entry point of the shell program
+ * @ac: len of av
+ * @av: command line arguments
  * Return: int
  */
 
-int main(void)
+int main(int ac, char *av[])
 {
 	int status = 1;
 	int exec_status = 1;
@@ -149,13 +152,14 @@ int main(void)
 	char *_buffer = NULL;
 	char **ptr;
 
+	(void) ac;
 	while (status)
 	{
 
 		_buffer = prompt(&exec_status);
 
 		ptr = parser(_buffer);
-		status = executer_process(ptr, &exec_status);
+		status = executer_process(ptr, &exec_status, av[0]);
 		exec_status++;
 		/* clean */
 		free(_buffer);

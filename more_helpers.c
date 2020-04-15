@@ -74,18 +74,20 @@ void print_number(int n)
 
 /**
  * build_error - builds an error when command not found
+ * @program_name: name of exec ./hsh
  * @str: cmmand name
  * @status: number of executions
  */
 
 
-void build_error(char *str, int *status)
+void build_error(char *str, int *status, char *program_name)
 {
 	int len = _strlen(str);
-	char err[] = "./hsh: ";
+	int len2 = _strlen(program_name);
 	char notfound[] = ": not found\n";
 
-	write(2, &err, _strlen(err));
+	write(2, program_name, len2);
+	write(2, ": ", 2);
 	print_number(*status);
 	write(2, ": ", 2);
 	write(2, str, len);
