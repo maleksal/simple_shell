@@ -4,7 +4,8 @@
 hsh - simple command line interpreter
 
 .SH SYNOPSIS
-hsh (arguments not supported)
+./hsh (arguments not supported)
+[command] [options]
 
 .SH DESCRIPTION
 This program is command line interpreter, contains the most basic features and functions found in the various shell programs.
