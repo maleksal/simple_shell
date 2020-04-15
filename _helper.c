@@ -61,6 +61,8 @@ int _strcmp(char *s1, char *s2)
 		}
 		i++;
 	}
+	if (len_s2 != i)
+		return (1);
 	return (0);
 }
 

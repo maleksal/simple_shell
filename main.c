@@ -88,6 +88,7 @@ int executer_process(char **array, int *exec, char *name, char **env)
 			} else
 				execve(ptr_mem, array, env);
 		}
+		exit(EXIT_FAILURE);
 	}
 	while ((wpid = wait(&status)) > 0)
 	;
@@ -162,11 +163,11 @@ int main(int ac, char *av[], char **env)
 		ptr = parser(_buffer);
 
 		/* handle exit*/
-		if (_strcmp(ptr[0], "exit") == 0)
+		if (_strcmp("exit", ptr[0]) == 0)
 		{
 			free(ptr);
 			free(_buffer);
-			exit(EXIT_SUCCESS);
+			_exit(0);
 		}
 
 		status = executer_process(ptr, &exec_status, av[0], env);
@@ -175,7 +176,6 @@ int main(int ac, char *av[], char **env)
 		free(_buffer);
 		_buffer = NULL;
 		free(ptr);
-
 	}
 
 	return (0);
