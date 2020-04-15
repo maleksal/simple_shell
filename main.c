@@ -84,7 +84,7 @@ int executer_process(char **array, int *exec_status, char *program_name)
 			if (ptr_mem == NULL)
 			{
 				build_error(array[0], exec_status, program_name);
-				exit(1);
+				exit(127);
 			} else
 				execve(ptr_mem, array, environ);
 		}
