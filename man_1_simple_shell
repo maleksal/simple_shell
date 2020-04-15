@@ -1,0 +1,40 @@
+.TH "Simple Shell" 1 "15 april 2020" "1.0" "Simple Shell man page"
+
+.SH NAME
+hsh - simple command line interpreter
+
+.SH SYNOPSIS
+hsh (arguments not supported)
+
+.SH DESCRIPTION
+This program is command line interpreter, contains the most basic features and functions found in the various shell programs.
+
+.SH OVERVIEW
+This Simple Shell project is a major team project conducted by Nour Taktak and Nour Ouhichi, students at Holberton School, for educational purposes. It consists of developing and making our own clone of DASH - Debian Almquist shell found in several versions of Ubuntu Linux. Though cloning of DASH was the general guidance, having the same exact functionalities and features was not the goal. The goal for us was to learn and develop various team and individual skills regarding coding and git.
+
+.SH RETURN VALUE
+The shell returns the error code given by the last completed command followed by either ctrl-d or exit with no status code.
+
+.SH SYNTAX
+#> <command> <flags or options> <argument 1> <argument 2> ...
+
+OR NON-INTERACTIVE MODE:
+$ echo "<command>" | ./hsh
+
+.SH BUILTIN COMMANDS
+.SS cd
+- change directory
+
+.SS env
+- list the current environment variables
+
+.SS exit
+- exit the shell
+
+.SH SEE ALSO
+DASH(1)
+
+
+.SH AUTHORS
+Malek Salem
+Khalil Kefi
