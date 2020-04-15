@@ -160,6 +160,15 @@ int main(int ac, char *av[], char **env)
 		_buffer = prompt(&exec_status);
 
 		ptr = parser(_buffer);
+
+		/* handle exit*/
+		if (_strcmp(ptr[0], "exit") == 0)
+		{
+			free(ptr);
+			free(_buffer);
+			exit(0);
+		}
+
 		status = executer_process(ptr, &exec_status, av[0], env);
 		exec_status++;
 		/* clean */
