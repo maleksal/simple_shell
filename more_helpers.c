@@ -22,8 +22,6 @@ int _stroc(char ch, char *src)
 
 }
 
-#include <unistd.h>
-
 /**
  * put_stderr - writes the character c to stderr
  * @c: The character to print
