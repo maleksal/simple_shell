@@ -152,6 +152,8 @@ int main(int ac, char *av[], char **env)
 	char **ptr;
 
 	(void) ac;
+
+	signal(SIGINT, interrupt);
 	while (status)
 	{
 

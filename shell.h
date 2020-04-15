@@ -2,6 +2,7 @@
 #define SHELL_H
 
 
+#include <signal.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -10,6 +11,7 @@
 #include <sys/stat.h>
 #include <sys/wait.h>
 
+void interrupt(int state);
 int _strlen(char *);
 char *_strncpy(char *, char *, int);
 char *_strcat(char *, char *);
