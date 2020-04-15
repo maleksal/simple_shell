@@ -57,8 +57,7 @@ char **parser(char *buffer)
 
 int executer_process(char **array, int *exec, char *name, char **env)
 {
-	char *ptr_mem = NULL;
-	char *ptr_path = NULL;
+	char *ptr_mem = NULL, *ptr_path = NULL;
 	pid_t pd, wpid;
 	struct stat sh;
 	int status;
@@ -71,6 +70,10 @@ int executer_process(char **array, int *exec, char *name, char **env)
 		return (0);
 	} else if (pd ==  0)
 	{
+		if (_strcmp("env", array[0]) == 0)
+		{	print_env(env);
+			return (0);
+		}
 		if (stat(array[0], &sh) == 0)
 			execve(array[0], array, env);
 		else
@@ -86,7 +89,6 @@ int executer_process(char **array, int *exec, char *name, char **env)
 		}
 		free(ptr_path);
 		free(ptr_mem);
-
 		exit(EXIT_FAILURE);
 	}
 	while ((wpid = wait(&status)) > 0)

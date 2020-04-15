@@ -95,6 +95,14 @@ void build_error(char *str, int *status, char *program_name)
 }
 
 
+void print_env(char **env)
+{
+	int i = 0;
 
-
-
+	while (env[i])
+	{
+		write(1, env[i], _strlen(env[i]));
+		write(1, "\n", 1);
+		i++;
+	}
+}
