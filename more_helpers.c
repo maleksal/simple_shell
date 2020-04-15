@@ -94,6 +94,10 @@ void build_error(char *str, int *status, char *program_name)
 	write(2, &notfound, _strlen(notfound));
 }
 
+/**
+* print_env - print enviroments variables at the presense of command env
+* @env: evniroment variables
+*/
 
 void print_env(char **env)
 {
