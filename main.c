@@ -47,7 +47,7 @@ char **parser(char *buffer)
 
 /**
  * executer_process - creates a new child process then executes
- * the give command using execve.
+ * the given command using execve.
  * @env: enviromnet variables
  * @name: name of the executable ./hsh
  * @exec: number of execution, needed for errors
@@ -99,8 +99,9 @@ int executer_process(char **array, int *exec, char *name, char **env)
 }
 
 /**
-  * prompt - takes input from stdin using getline
-  * @exec_status: number of execution
+  * prompt - takes input from stdin using getline and handels
+  * the input if it either spaces or new lines.
+  * @exec_status: number of input execution
   * Return: pointer
   */
 
