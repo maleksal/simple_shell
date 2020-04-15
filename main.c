@@ -80,15 +80,15 @@ int executer_process(char **array, int *exec_status, char *program_name)
 			/*get $PATH and check for command */
 			ptr_path = _getenv("PATH", environ);
 			ptr_mem = checkCMDpath(array[0], ptr_path);
-
 			if (ptr_mem == NULL)
 			{
 				build_error(array[0], exec_status, program_name);
-				exit(127);
+				exit(EXIT_FAILURE);
 			} else
 				execve(ptr_mem, array, environ);
 		}
 		perror(array[0]);
+		exit(EXIT_FAILURE);
 	}
 	while ((wpid = wait(&status)) > 0)
 	;
