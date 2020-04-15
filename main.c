@@ -69,14 +69,10 @@ int executer_process(char **array, int *exec, char *name, char **env)
 	{
 		perror("shell");
 		return (0);
-	}
-
-	else if (pd ==  0)
+	} else if (pd ==  0)
 	{
-
 		if (stat(array[0], &sh) == 0)
 			execve(array[0], array, env);
-
 		else
 		{
 			/*get $PATH and check for command */
@@ -88,12 +84,15 @@ int executer_process(char **array, int *exec, char *name, char **env)
 			} else
 				execve(ptr_mem, array, env);
 		}
+		free(ptr_path);
+		free(ptr_mem);
+
 		exit(EXIT_FAILURE);
 	}
 	while ((wpid = wait(&status)) > 0)
 	;
 	free(ptr_path);
-	free(NULL);
+	free(ptr_mem);
 	return (1);
 }
 
@@ -165,9 +164,9 @@ int main(int ac, char *av[], char **env)
 		/* handle exit*/
 		if (_strcmp("exit", ptr[0]) == 0)
 		{
-			free(ptr);
 			free(_buffer);
-			_exit(0);
+			free(ptr);
+			exit(0);
 		}
 
 		status = executer_process(ptr, &exec_status, av[0], env);
