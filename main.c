@@ -166,7 +166,7 @@ int main(int ac, char *av[], char **env)
 		{
 			free(ptr);
 			free(_buffer);
-			_exit(EXIT_SUCCESS);
+			exit(EXIT_SUCCESS);
 		}
 
 		status = executer_process(ptr, &exec_status, av[0], env);
