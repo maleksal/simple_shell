@@ -48,13 +48,14 @@ char **parser(char *buffer)
 /**
  * executer_process - creates a new child process then executes
  * the give command using execve.
- * @program_name: name of the executable ./hsh
- * @exec_status: number of execution, needed for errors
+ * @env: enviromnet variables
+ * @name: name of the executable ./hsh
+ * @exec: number of execution, needed for errors
  * @array: takes an 2d array
  * Return: 0 on success OR 1 on fail
  */
 
-int executer_process(char **array, int *exec_status, char *program_name)
+int executer_process(char **array, int *exec, char *name, char **env)
 {
 	char *ptr_mem = NULL;
 	char *ptr_path = NULL;
@@ -62,6 +63,7 @@ int executer_process(char **array, int *exec_status, char *program_name)
 	struct stat sh;
 	int status;
 
+	(void) wpid;
 	pd = fork();
 	if (pd < 0)
 	{
@@ -73,26 +75,22 @@ int executer_process(char **array, int *exec_status, char *program_name)
 	{
 
 		if (stat(array[0], &sh) == 0)
-			execve(array[0], array, environ);
+			execve(array[0], array, env);
 
 		else
 		{
 			/*get $PATH and check for command */
-			ptr_path = _getenv("PATH", environ);
+			ptr_path = _getenv("PATH", env);
 			ptr_mem = checkCMDpath(array[0], ptr_path);
 			if (ptr_mem == NULL)
 			{
-				build_error(array[0], exec_status, program_name);
-				exit(EXIT_FAILURE);
+				build_error(array[0], exec, name);
 			} else
-				execve(ptr_mem, array, environ);
+				execve(ptr_mem, array, env);
 		}
-		perror(array[0]);
-		exit(EXIT_FAILURE);
 	}
 	while ((wpid = wait(&status)) > 0)
 	;
-
 	free(ptr_path);
 	free(NULL);
 	return (1);
@@ -141,10 +139,11 @@ char *prompt(int *exec_status)
  * main - entry point of the shell program
  * @ac: len of av
  * @av: command line arguments
+ * @env: enviroment variables
  * Return: int
  */
 
-int main(int ac, char *av[])
+int main(int ac, char *av[], char **env)
 {
 	int status = 1;
 	int exec_status = 1;
@@ -159,7 +158,7 @@ int main(int ac, char *av[])
 		_buffer = prompt(&exec_status);
 
 		ptr = parser(_buffer);
-		status = executer_process(ptr, &exec_status, av[0]);
+		status = executer_process(ptr, &exec_status, av[0], env);
 		exec_status++;
 		/* clean */
 		free(_buffer);

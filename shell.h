@@ -19,6 +19,5 @@ int _stroc(char, char *);
 char *_getenv(char *name, char **env);
 char *checkCMDpath(char *cmd, char *path);
 void build_error(char *, int *, char*);
-extern char **environ;
 
 #endif
