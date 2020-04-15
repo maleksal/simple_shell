@@ -21,3 +21,78 @@ int _stroc(char ch, char *src)
 	return (count);
 
 }
+
+#include <unistd.h>
+
+/**
+ * put_stderr - writes the character c to stderr
+ * @c: The character to print
+ *
+ * Return: On success 1.
+ * On error, -1 is returned, and errno is set appropriately.
+ */
+
+int put_stderr(char c)
+{
+	return (write(2, &c, 1));
+}
+
+
+/**
+  *  print_number - print digits
+  *  ------------------
+  *
+  *  @n: takes an int (digit)
+  *
+  *  Return: implicit return
+ **/
+
+void print_number(int n)
+{
+	if (n / 10 != 0)
+	{
+		print_number(n / 10);
+		if (n > 0)
+		{
+			put_stderr((n % 10) + '0');
+		} else
+		{
+			put_stderr((-n % 10) + '0');
+		}
+	}
+	else if ((n / 10 == 0) && (n % 10 != 0) && (n > 0))
+	{
+		put_stderr((n % 10) + '0');
+	}
+	else if ((n / 10 == 0) && (n % 10 != 0) && (n <= 0))
+	{
+		put_stderr('-');
+		put_stderr((-n % 10) + '0');
+	}
+}
+
+
+/**
+ * build_error - builds an error when command not found
+ * @str: cmmand name
+ * @status: number of executions
+ */
+
+
+void build_error(char *str, int *status)
+{
+	int len = _strlen(str);
+	char err[] = "./hsh: ";
+	char notfound[] = ": not found\n";
+
+	write(2, &err, _strlen(err));
+	print_number(*status);
+	write(2, ": ", 2);
+	write(2, str, len);
+	write(2, &notfound, _strlen(notfound));
+}
+
+
+
+
+

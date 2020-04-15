@@ -48,12 +48,12 @@ char **parser(char *buffer)
 /**
  * executer_process - creates a new child process then executes
  * the give command using execve.
- *
+ * @exec_status: number of execution, needed for errors
  * @array: takes an 2d array
  * Return: 0 on success OR 1 on fail
  */
 
-int executer_process(char **array)
+int executer_process(char **array, int *exec_status)
 {
 	char *ptr_mem = NULL;
 	char *ptr_path = NULL;
@@ -70,42 +70,40 @@ int executer_process(char **array)
 
 	else if (pd ==  0)
 	{
-		
+
 		if (stat(array[0], &sh) == 0)
 			execve(array[0], array, environ);
-		
+
 		else
 		{
-
 			/*get $PATH and check for command */
-			
 			ptr_path = _getenv("PATH", environ);
 			ptr_mem = checkCMDpath(array[0], ptr_path);
 
 			if (ptr_mem == NULL)
-				execve(array[0], array, environ);
-			else
+			{
+				build_error(array[0], exec_status);
+				exit(1);
+			} else
 				execve(ptr_mem, array, environ);
 		}
-
 		perror(array[0]);
 	}
-
 	while ((wpid = wait(&status)) > 0)
 	;
-	
+
 	free(ptr_path);
 	free(NULL);
-
 	return (1);
 }
 
 /**
   * prompt - takes input from stdin using getline
+  * @exec_status: number of execution
   * Return: pointer
   */
 
-char *prompt(void)
+char *prompt(int *exec_status)
 {
 	ssize_t ret;
 	size_t size = 0;
@@ -131,7 +129,8 @@ char *prompt(void)
 	{
 		free(buffer);
 		buffer = NULL;
-		return (prompt());
+		*exec_status += 1;
+		return (prompt(exec_status));
 	}
 
 	return (buffer);
@@ -145,6 +144,7 @@ char *prompt(void)
 int main(void)
 {
 	int status = 1;
+	int exec_status = 1;
 
 	char *_buffer = NULL;
 	char **ptr;
@@ -152,11 +152,11 @@ int main(void)
 	while (status)
 	{
 
-		_buffer = prompt();
+		_buffer = prompt(&exec_status);
 
 		ptr = parser(_buffer);
-		status = executer_process(ptr);
-
+		status = executer_process(ptr, &exec_status);
+		exec_status++;
 		/* clean */
 		free(_buffer);
 		_buffer = NULL;
